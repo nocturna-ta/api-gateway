@@ -1,0 +1,54 @@
+version: '3'
+services:
+  krakend:
+    image: devopsfaith/krakend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./krakend.json:/etc/krakend/krakend.json
+    depends_on:
+      - ums
+    networks:
+      - app-network
+
+  ums:
+    build:
+      context: ../ums
+      dockerfile: Dockerfile
+      args:
+        - GITHUB_TOKEN=${GITHUB_TOKEN}
+
+    ports:
+      - "8900:8900"
+      - "35000:35000"
+    volumes:
+      - ../ums/config/files/config.yaml:/app/config/files/config.yaml
+    environment:
+      - TZ=UTC
+      - GOPRIVATE=github.com/nocturna-ta/
+    networks:
+      - app-network
+    # If you need to connect to other services like a database, add them here
+    depends_on:
+       - postgres
+
+  # Add other services as needed, for example:
+  postgres:
+     image: postgres:14
+     environment:
+       - POSTGRES_PASSWORD=1235813
+       - POSTGRES_USER=postgres
+       - POSTGRES_DB=ums
+     ports:
+       - "5433:5432"
+     volumes:
+       - postgres_data:/var/lib/postgresql/data
+     networks:
+       - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+   postgres_data:

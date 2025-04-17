@@ -1,0 +1,16 @@
+{
+  "version" : 3,
+  "endpoints" : [
+    {
+      "endpoint" : "/health",
+      "backend" : [
+        {
+          "url_pattern" : "/",
+            "host" : [
+                "http://ums:8900"
+            ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 version: '3'
 services:
   krakend:
-    image: devopsfaith/krakend
+    image: devopsfaith/krakend:latest
+    container_name: krakend-gateway
     ports:
       - "8080:8080"
     volumes:
@@ -10,6 +11,53 @@ services:
       - ums
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8080/__health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  zookeeper:
+    image: zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    volumes:
+      - zookeeper_data:/data
+      - zookeeper_datalog:/datalog
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      # KRaft mode configuration
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    volumes:
+      - kafka_data:/bitnami/kafka
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   ums:
     build:
@@ -17,38 +65,58 @@ services:
       dockerfile: Dockerfile
       args:
         - GITHUB_TOKEN=${GITHUB_TOKEN}
-
+    container_name: ums-service
     ports:
       - "8900:8900"
       - "35000:35000"
     volumes:
-      - ../ums/config/files/config.yaml:/app/config/files/config.yaml
+      - ./config/files/config.yaml:/app/config/files/config.yaml
     environment:
       - TZ=UTC
       - GOPRIVATE=github.com/nocturna-ta/
+      - DB_SLAVE_DSN=postgres://postgres:1235813@postgres:5432/ums?sslmode=disable
+      - DB_MASTER_DSN=postgres://postgres:1235813@postgres:5432/ums?sslmode=disable
+      - GANACHE_URL=http://host.docker.internal:7545
     networks:
       - app-network
-    # If you need to connect to other services like a database, add them here
     depends_on:
-       - postgres
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8900/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
-  # Add other services as needed, for example:
   postgres:
-     image: postgres:14
-     environment:
-       - POSTGRES_PASSWORD=1235813
-       - POSTGRES_USER=postgres
-       - POSTGRES_DB=ums
-     ports:
-       - "5433:5432"
-     volumes:
-       - postgres_data:/var/lib/postgresql/data
-     networks:
-       - app-network
+    image: postgres:latest
+    container_name: ums-postgres
+    environment:
+      - POSTGRES_PASSWORD=1235813
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=ums
+    ports:
+      - "15432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   app-network:
     driver: bridge
 
 volumes:
-   postgres_data:
+  postgres_data:
+  kafka_data:
+  zookeeper_data:
+  zookeeper_datalog:

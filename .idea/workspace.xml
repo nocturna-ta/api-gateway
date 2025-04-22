@@ -5,14 +5,124 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e17961b5-a02e-47ce-9979-31fb36d6f7ec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config/files/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend_factory.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/files/krakend-logrotate" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/files/krakend.conf-rsyslog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/files/krakend.init" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/files/krakend.service" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/files/rpmmacros" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/scripts/postrm.deb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/scripts/postrm.rpm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/scripts/preinst.deb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/scripts/preinst.rpm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/scripts/prerm.deb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/scripts/prerm.rpm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/builder/skel/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/krakend-ce/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/krakend-integration/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/krakend.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/partials/.keep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/settings/dummy-sample.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/settings/plugins.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/templates/.keep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/templates/auth.tmpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/encoding.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/executor.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ext/authz/authz.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ext/authz/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ext/common/common.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ext/service/authz.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ext/service/entity.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/find_glibc.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jwk.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy_factor.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/router_engine.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sd.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/bench.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/krakend.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/lua/base64.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/lua/collection.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/lua/decorator.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/lua/json.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/backend_301.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/backend_302.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/backend_303.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/backend_307.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/backend_404.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/botdetector_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/botdetector_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/botdetector_3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/botdetector_4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cel-1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cel-2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cel-3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cel-4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cel-5.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cel-6.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cel-7.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cors_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cors_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cors_3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cors_4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/cors_5.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/detail_error.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/flatmap_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/integration_jsonschema.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/integration_schema.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/jsonschema_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/jwt_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/jwt_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/jwt_3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/jwt_4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/jwt_5.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/lua_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/lua_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/negotitate_json.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/negotitate_plain.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/no-op_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/no-op_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/param_forwarding_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/param_forwarding_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/param_forwarding_3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/param_forwarding_4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/query_forwarding_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/query_forwarding_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/query_forwarding_3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/router_401_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/router_404.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/router_405.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/rss.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/sequential_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/sequential_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/static.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/timeout.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/xml_1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/fixtures/specs/xml_2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/integration.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/integration_example_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/integration_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/files/config.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/krakend.json" beforeDir="false" afterPath="$PROJECT_DIR$/krakend.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="NewLua" />
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file://$USER_HOME$/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.1.windows-amd64" />
   <component name="Git.Settings">
@@ -26,21 +136,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bbyas&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "C:/Users/bbyas/Documents/Kuliah/Skripsi/backend/api-gateway/test/fixtures/specs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\bbyas\Documents\Kuliah\Skripsi\backend\api-gateway\test\fixtures\specs" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\bbyas\Documents\Kuliah\Skripsi\backend\api-gateway\test" />
+      <recent name="C:\Users\bbyas\Documents\Kuliah\Skripsi\backend\api-gateway\test\fixtures" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

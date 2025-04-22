@@ -1,0 +1,33 @@
+{
+  "base_path": "/dummy",
+  "endpoints": [
+    {
+      "path": "/quickstart",
+      "method": "GET",
+      "host" : "http://localhost:8900",
+      "destination": "/v1/quickstart",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "quickstart-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/ratelimit/proxy": {
+          "max_rate": 2,
+          "capacity": 2
+        },
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 10,
+          "max_errors": 1
+        }
+      }
+    }
+  ]
+}

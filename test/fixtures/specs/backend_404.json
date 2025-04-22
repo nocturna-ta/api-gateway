@@ -1,0 +1,15 @@
+{
+	"in": {
+		"method": "GET",
+		"url": "http://localhost:8080/crash"
+	},
+	"out": {
+		"status_code": 500,
+		"body": "invalid status code",
+		"header": {
+			"content-type": ["text/plain; charset=utf-8"],
+			"Cache-Control": [""],
+			"X-Krakend-Completed": ["false"]
+		}
+	}
+}

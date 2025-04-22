@@ -6,7 +6,8 @@
   "cache_ttl": "300s",
   "extra_config": {{ marshal .plugins.global}},
 "endpoints": [
-{{ range $key, $value := . }} {{ range $value.endpoints }}
+{{ range $key, $value := . }}
+{{ range $value.endpoints }}
 {
 "endpoint": "{{if $value.base_path}}{{$value.base_path}}{{end}}{{.path}}",
 "method": "{{ .method }}",
@@ -34,7 +35,8 @@
 }
 ]
 },
-{{end}} {{end}}
+{{end}}
+{{end}}
 {
 "endpoint": "/status",
 "method": "GET",

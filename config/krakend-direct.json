@@ -1,0 +1,28 @@
+{
+  "version": 3,
+  "name": "API-Gateway",
+  "port": 8080,
+  "endpoints": [
+    {
+      "endpoint": "/v1/kpu-provinsi",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/v1/kpu-provinsi",
+          "host": ["http://host.docker.internal:8900"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/test",
+      "method": "GET",
+      "backend": [
+        {
+          "url_pattern": "/get",
+          "host": ["https://httpbin.org"]
+        }
+      ]
+    }
+  ]
+}

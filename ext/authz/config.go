@@ -1,10 +1,8 @@
 package authz
 
 import (
-	"fmt"
 	"github.com/luraproject/lura/v2/config"
 	"github.com/nocturna-ta/api-gateway/ext/service"
-	"net/url"
 )
 
 const (
@@ -16,6 +14,7 @@ type extraConfig struct {
 	ServiceAddress    string
 	TargetService     string
 	LogRequestOnError bool
+	RequiredRoles     string
 }
 
 func configGetter(cfg config.ExtraConfig) *extraConfig {
@@ -44,12 +43,9 @@ func configGetter(cfg config.ExtraConfig) *extraConfig {
 		conf.LogRequestOnError = val
 	}
 
-	_, err := url.Parse(conf.ServiceAddress)
-	if err != nil {
-		fmt.Println("Error parsing service url ", err)
-		return nil
+	if roles, ok := tmp["required_roles"].(string); ok {
+		conf.RequiredRoles = roles
 	}
-
 	conf.AuthService = service.NewAuthSvc(conf.ServiceAddress)
 
 	return &conf

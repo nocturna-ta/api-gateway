@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/luraproject/lura/v2/config"
 	"github.com/luraproject/lura/v2/logging"
@@ -87,26 +86,10 @@ func (ec *extraConfig) validate(c *gin.Context) (bool, error) {
 		return false, err
 	}
 
-	if ec.RequiredRoles != "" && res.InjectHeaders["Role"] != "" {
-		userRole := res.InjectHeaders["Role"]
-		requiredRoles := strings.Split(ec.RequiredRoles, ",")
-
-		authorized := false
-		for _, role := range requiredRoles {
-			if strings.TrimSpace(role) == userRole {
-				authorized = true
-				break
-			}
-		}
-
-		if !authorized {
-			return false, errors.New("insufficient permissions")
-		}
-	}
-
 	// injecting headers from security/auth
 	for key, val := range res.InjectHeaders {
 		c.Request.Header.Set(key, val)
+		c.Header(key, val)
 	}
 
 	return true, nil

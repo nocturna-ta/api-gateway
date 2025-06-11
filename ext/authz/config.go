@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	namespace = "nocturna/auth"
+	namespace = "votechain/auth"
 )
 
 type extraConfig struct {

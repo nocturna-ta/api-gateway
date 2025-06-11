@@ -2,41 +2,56 @@
   "version": 3,
   "name": "API-Gateway",
   "port": 8000,
-  "timeout": "30s",
+  "timeout": "60s",
   "cache_ttl": "300s",
   "extra_config": {{ marshal .plugins.global}},
 "endpoints": [
-{{ range $key, $value := . }}
-{{ range $value.endpoints }}
+{{ range $serviceKey, $service := . }}
+{{ range $endpointIndex, $endpoint := $service.endpoints }}
 {
-"endpoint": "{{if $value.base_path}}{{$value.base_path}}{{end}}{{.path}}",
-"method": "{{ .method }}",
+"endpoint": "{{if $service.base_path}}{{$service.base_path}}{{end}}{{$endpoint.path}}",
+"method": "{{ $endpoint.method }}",
 "output_encoding": "no-op",
 "concurrent_calls": 1,
 "input_query_strings": ["*"],
 "input_headers": ["*"],
 "extra_config": {
-{{if .auth}}{{ template "auth.tmpl" .}}{{end}}
-{{ if $value.extra_config }}, {{ marshal $value.extra_config}} {{ end }}
+{{- $extraConfigs := list }}
+{{- if $endpoint.auth }}
+{{- $extraConfigs = append $extraConfigs "auth" }}
+{{- end }}
+{{- if $service.extra_config }}
+{{- $extraConfigs = append $extraConfigs "service" }}
+{{- end }}
+
+{{- if $endpoint.auth }}
+{{ template "auth.tmpl" $endpoint }}
+{{- end }}
+{{- if and $endpoint.auth $service.extra_config }},{{ end }}
+{{- if $service.extra_config }}
+{{ marshal $service.extra_config}}
+{{- end }}
 },
 "backend": [
 {
-"url_pattern": "{{.destination}}",
+"url_pattern": "{{$endpoint.destination}}",
 "encoding": "no-op",
 "sd": "static",
-"method": "{{.method}}",
+"method": "{{$endpoint.method}}",
 "host": [
-"{{.host}}"
+"{{$endpoint.host}}"
 ],
 "disable_host_sanitize": false,
 "extra_config": {
-{{ if $value.backend_extra_config }} {{ marshal $value.backend_extra_config}} {{ end }}
+{{- if $service.backend_extra_config }}
+{{ marshal $service.backend_extra_config}}
+{{- end }}
 }
 }
 ]
 },
-{{end}}
-{{end}}
+{{ end }}
+{{ end }}
 {
 "endpoint": "/status",
 "method": "GET",

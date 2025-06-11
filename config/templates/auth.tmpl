@@ -1,7 +1,5 @@
 "votechain/auth": {
-    "security_address": "localhost:35000",
-    "target_service_name": "{{ .auth.target_service }}",
-    "log_request_on_error": {{ if .auth.log_request_on_error }}true{{ else }}false{{ end }}
-    {{if .auth.required_roles}},
-    "required_roles": "{{.auth.required_roles}}"{{end}}
+  "security_address": "host.docker.internal:35000",
+  "target_service_name": "{{ .auth.target_service }}",
+  "log_request_on_error": {{ if .auth.log_request_on_error }}true{{ else }}false{{ end }}
 }

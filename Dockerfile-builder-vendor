@@ -1,0 +1,42 @@
+ARG GOLANG_VERSION=1.24
+
+FROM golang:${GOLANG_VERSION}-alpine AS builder
+
+# Install build dependencies
+RUN apk add --no-cache \
+    make \
+    gcc \
+    musl-dev \
+    ca-certificates
+
+# Set working directory
+WORKDIR /app
+
+# Copy everything including vendor directory
+COPY . .
+
+# Build with proper version ldflags (hardcoded for simplicity)
+RUN CGO_ENABLED=0 GOOS=linux go build \
+    -mod=vendor \
+    -ldflags="-w -s \
+    -X github.com/luraproject/lura/v2/core.KrakendVersion=2.4.2 \
+    -X github.com/luraproject/lura/v2/core.GoVersion=1.21 \
+    -X github.com/luraproject/lura/v2/core.GlibcVersion=MUSL-1.2.4_alpine \
+    -X github.com/krakendio/krakend-cobra/v2.SchemaURL=https://www.krakend.io/schema/v2.4/krakend.json" \
+    -o krakend \
+    ./cmd/krakend-ce
+
+# Create minimal runtime image
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates tzdata && \
+    adduser -u 1000 -S -D -H krakend
+
+WORKDIR /app
+
+# Copy the binary from builder stage
+COPY --from=builder /app/krakend /usr/bin/krakend
+
+USER 1000
+
+ENTRYPOINT ["/usr/bin/krakend"]

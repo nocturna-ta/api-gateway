@@ -2,13 +2,13 @@
   "base_path": "/dummy",
   "endpoints": [
     {
-      "path": "/quickstart",
+      "path": "/kpu-provinsi",
       "method": "GET",
-      "host" : "http://localhost:8900",
-      "destination": "/v1/quickstart",
+      "host" : "host.docker.internal:8900",
+      "destination": "/v1/kpu-provinsi",
       "auth": {
         "log_request_on_error": true,
-        "target_service": "quickstart-service"
+        "target_service": "user-service"
       },
       "extra_config": {
         "qos/ratelimit/router": {

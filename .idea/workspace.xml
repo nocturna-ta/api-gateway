@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e17961b5-a02e-47ce-9979-31fb36d6f7ec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Dockerfile-builder-vendor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/settings/election.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/settings/result.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/settings/ums.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/settings/vote.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/krakend-direct.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/krakend.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/krakend.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/dummy-sample.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/dummy-sample.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/kpu-endpoints.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/kpu-services.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/kpu.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/dummy-sample.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/config/settings/plugins.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/plugins.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/templates/auth.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/config/templates/auth.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ext/authz/authz.go" beforeDir="false" afterPath="$PROJECT_DIR$/ext/authz/authz.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ext/authz/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/ext/authz/config.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

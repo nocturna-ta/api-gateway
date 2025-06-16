@@ -1,0 +1,352 @@
+{
+  "base_path": "",
+  "endpoints": [
+    {
+      "path": "/result/docs/{path}",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/result/docs/{path}",
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/votes/{id}",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/votes/{id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 50,
+          "client_max_rate": 15,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "5m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/votes",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/votes",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 100,
+          "client_max_rate": 20,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "2m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/votes/count",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/votes/count",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 200,
+          "client_max_rate": 30,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "30s"
+        }
+      },
+      "backend_extra_config": {
+        "qos/http-cache": {
+          "ttl": "1m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/elections/{election_pair_id}",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/elections/{election_pair_id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 100,
+          "client_max_rate": 25,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "3m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/elections/{election_pair_id}/votes",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/elections/{election_pair_id}/votes",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 80,
+          "client_max_rate": 20,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "2m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/elections/{election_pair_id}/count",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/elections/{election_pair_id}/count",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 150,
+          "client_max_rate": 30,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "30s"
+        }
+      },
+      "backend_extra_config": {
+        "qos/http-cache": {
+          "ttl": "1m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/regions",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/regions",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 50,
+          "client_max_rate": 10,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "10m"
+        }
+      },
+      "backend_extra_config": {
+        "qos/http-cache": {
+          "ttl": "5m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/regions/{region}",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/regions/{region}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 80,
+          "client_max_rate": 20,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "5m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/regions/{region}/votes",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/regions/{region}/votes",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 60,
+          "client_max_rate": 15,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "3m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/regions/{region}/elections",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/regions/{region}/elections",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 60,
+          "client_max_rate": 15,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "3m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/regions/{region}/count",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/regions/{region}/count",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 100,
+          "client_max_rate": 25,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "1m"
+        }
+      },
+      "backend_extra_config": {
+        "qos/http-cache": {
+          "ttl": "2m"
+        }
+      }
+    },
+    {
+      "path": "/v1/results/statistics",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/statistics",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 30,
+          "client_max_rate": 8,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "15m"
+        }
+      },
+      "backend_extra_config": {
+        "qos/http-cache": {
+          "ttl": "10m"
+        },
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 30,
+          "max_errors": 3
+        }
+      }
+    },
+    {
+      "path": "/v1/results/statistics/daily",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/results/statistics/daily",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "results-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 20,
+          "client_max_rate": 5,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      },
+      "backend_extra_config": {
+        "qos/http-cache": {
+          "ttl": "30m"
+        },
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 45,
+          "max_errors": 2
+        }
+      }
+    },
+    {
+      "path": "/v1/live/status",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/live/status",
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 100,
+          "client_max_rate": 30,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "10s"
+        }
+      }
+    },
+    {
+      "path": "/v1/live/broadcast",
+      "method": "POST",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/live/broadcast",
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 3,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 15,
+          "max_errors": 2
+        }
+      }
+    }
+  ]
+}

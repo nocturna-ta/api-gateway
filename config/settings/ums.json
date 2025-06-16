@@ -1,0 +1,541 @@
+{
+  "base_path": "",
+  "endpoints": [
+    {
+      "path": "/user/docs/{path}",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/user/docs/{path}",
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/kpu-pusat/id",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-pusat/id",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/ratelimit/proxy": {
+          "max_rate": 5,
+          "capacity": 5
+        },
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 10,
+          "max_errors": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/voter/register",
+      "method": "POST",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/voter/register",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/voter/nik/{nik}",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/voter/nik/{nik}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/voter/address",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/voter/address",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/voter/region/{region}",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/voter/region/{region}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/voter",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/voter/",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/voter/{id}/photo",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/voter/{id}/photo",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/kpu-provinsi",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-provinsi/",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/kpu-provinsi/id",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-provinsi/id",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/kpu-provinsi/photo",
+      "method": "POST",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-provinsi/photo",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/kpu-provinsi/photo",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-provinsi/photo",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "30m"
+        }
+      }
+    },
+    {
+      "path": "/v1/kpu-provinsi/update",
+      "method": "PUT",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-provinsi/update",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/kpu-kota",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-kota/",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/kpu-kota/id",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-kota/id",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/kpu-kota/photo",
+      "method": "POST",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-kota/photo",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/kpu-kota/photo",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-kota/photo",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "30m"
+        }
+      }
+    },
+    {
+      "path": "/v1/kpu-kota/update",
+      "method": "PUT",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/kpu-kota/update",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/user/register",
+      "method": "POST",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user/register",
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/user/me",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user/me",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/user/login",
+      "method": "POST",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user/login",
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 3,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/user/{email}",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user/{email}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/user/verification-status/{email}",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user/verification-status/{email}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/user/my-verification-status",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user/my-verification-status",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      }
+    },
+    {
+      "path": "/v1/verifications/pending",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/verifications/pending",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service",
+        "required_roles": "kpu-pusat,kpu-provinsi,kpu-kota"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 20,
+          "client_max_rate": 5,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/verifications/details/{user_id}",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/verifications/details/{user_id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service",
+        "required_roles": "kpu-pusat,kpu-provinsi,kpu-kota"
+      }
+    },
+    {
+      "path": "/v1/verifications/approve",
+      "method": "POST",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/verifications/approve",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service",
+        "required_roles": "kpu-pusat,kpu-provinsi,kpu-kota"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/verifications/reject",
+      "method": "POST",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/verifications/reject",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service",
+        "required_roles": "kpu-pusat,kpu-provinsi,kpu-kota"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/user-logs",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user-logs/",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 15,
+          "client_max_rate": 3,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+        "path": "/v1/user-statistic/approved-dpt",
+        "method": "GET",
+        "host": "host.docker.internal:8900",
+        "destination": "/v1/user-statistic/approved-dpt",
+        "auth": {
+            "log_request_on_error": true,
+            "target_service": "user-service"
+        },
+        "extra_config": {
+            "qos/ratelimit/router": {
+            "max_rate": 15,
+            "client_max_rate": 3,
+            "strategy": "ip"
+            }
+        }
+    },
+    {
+        "path": "/v1/user-statistic/rejected-dpt",
+        "method": "GET",
+        "host": "host.docker.internal:8900",
+        "destination": "/v1/user-statistic/rejected-dpt",
+        "auth": {
+            "log_request_on_error": true,
+            "target_service": "user-service"
+        },
+        "extra_config": {
+            "qos/ratelimit/router": {
+            "max_rate": 15,
+            "client_max_rate": 3,
+            "strategy": "ip"
+            }
+        }
+    },
+    {
+        "path": "/v1/user-statistic/pending-dpt",
+        "method": "GET",
+        "host": "host.docker.internal:8900",
+        "destination": "/v1/user-statistic/pending-dpt",
+        "auth": {
+            "log_request_on_error": true,
+            "target_service": "user-service"
+        },
+        "extra_config": {
+            "qos/ratelimit/router": {
+            "max_rate": 15,
+            "client_max_rate": 3,
+            "strategy": "ip"
+            }
+        }
+    },
+    {
+        "path": "/v1/user-statistic/total-dpt",
+        "method": "GET",
+        "host": "host.docker.internal:8900",
+        "destination": "/v1/user-statistic/total-dpt",
+        "auth": {
+            "log_request_on_error": true,
+            "target_service": "user-service"
+        },
+        "extra_config": {
+            "qos/ratelimit/router": {
+            "max_rate": 15,
+            "client_max_rate": 3,
+            "strategy": "ip"
+            }
+        }
+    },
+    {
+        "path": "/v1/user-statistic/kpu-provinsi-staff",
+        "method": "GET",
+        "host": "host.docker.internal:8900",
+        "destination": "/v1/user-statistic/kpu-provinsi-staff",
+        "auth": {
+            "log_request_on_error": true,
+            "target_service": "user-service"
+        },
+        "extra_config": {
+            "qos/ratelimit/router": {
+            "max_rate": 15,
+            "client_max_rate": 3,
+            "strategy": "ip"
+            }
+        }
+    },
+    {
+        "path": "/v1/user-statistic/kpu-kota-staff",
+        "method": "GET",
+        "host": "host.docker.internal:8900",
+        "destination": "/v1/user-statistic/kpu-kota-staff",
+        "auth": {
+            "log_request_on_error": true,
+            "target_service": "user-service"
+        },
+        "extra_config": {
+            "qos/ratelimit/router": {
+            "max_rate": 15,
+            "client_max_rate": 3,
+            "strategy": "ip"
+            }
+        }
+    },
+    {
+      "path": "/v1/user-statistic/province-information-dpt",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user-statistic/province-information-dpt",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 15,
+          "client_max_rate": 3,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+        "path": "/v1/user-statistic/kota-information-dpt",
+        "method": "GET",
+        "host": "host.docker.internal:8900",
+        "destination": "/v1/user-statistic/kota-information-dpt",
+        "auth": {
+            "log_request_on_error": true,
+            "target_service": "user-service"
+        },
+        "extra_config": {
+            "qos/ratelimit/router": {
+            "max_rate": 15,
+            "client_max_rate": 3,
+            "strategy": "ip"
+            }
+        }
+    },
+    {
+      "path": "/v1/user-statistic/voted",
+      "method": "GET",
+      "host": "host.docker.internal:8900",
+      "destination": "/v1/user-statistic/voted",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "user-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 15,
+          "client_max_rate": 3,
+          "strategy": "ip"
+        }
+      }
+    }
+  ]
+}

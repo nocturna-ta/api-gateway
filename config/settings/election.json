@@ -1,0 +1,361 @@
+{
+  "base_path": "",
+  "endpoints": [
+    {
+      "path": "/election/docs/{path}",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/election/docs/{path}",
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 20,
+          "client_max_rate": 5,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/http-cache": {
+          "ttl": "5m"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "10m"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}/photo",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}/photo",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}/photo/president",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}/photo/president",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}/photo/vice-president",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}/photo/vice-president",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}/activate",
+      "method": "PUT",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}/activate",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}/full",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}/full",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "10m"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/number/{no}",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/number/{no}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "10m"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/register",
+      "method": "POST",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/register",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/detail",
+      "method": "PUT",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/detail",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}/detail",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}/detail",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "15m"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}/detail/program-docs",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}/detail/program-docs",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "30m"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/supporting-party",
+      "method": "POST",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/supporting-party",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/supporting-party",
+      "method": "DELETE",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/supporting-party",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/election/pairs/{id}/supporting-parties",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/{id}/supporting-parties",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "10m"
+        }
+      }
+    },
+    {
+      "path": "/v1/party/register",
+      "method": "POST",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/party/register",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/party/update",
+      "method": "PUT",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/party/update",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 10,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/party/{id}",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/party/{id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "15m"
+        }
+      }
+    },
+    {
+      "path": "/v1/party/{id}",
+      "method": "DELETE",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/party/{id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
+      "path": "/v1/party/{id}/photo",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/party/{id}/photo",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/party",
+      "method": "GET",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/party",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 20,
+          "client_max_rate": 5,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/http-cache": {
+          "ttl": "5m"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "base_path": "",
+  "endpoints": [
+    {
+      "path": "/vote/docs/{path}",
+      "method": "GET",
+      "host": "host.docker.internal:8902",
+      "destination": "/vote/docs/{path}",
+      "extra_config": {
+        "qos/http-cache": {
+          "ttl": "1h"
+        }
+      }
+    },
+    {
+      "path": "/v1/vote/cast",
+      "method": "POST",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/vote/cast",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 30,
+          "max_errors": 1
+        },
+        "qos/ratelimit/proxy": {
+          "max_rate": 3,
+          "capacity": 3
+        }
+      }
+    },
+    {
+      "path": "/v1/vote/{id}/status",
+      "method": "GET",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/vote/{id}/status",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 20,
+          "client_max_rate": 5,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "1m"
+        }
+      }
+    },
+    {
+      "path": "/v1/election-time/status",
+      "method": "GET",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/election-time/status",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 50,
+          "client_max_rate": 10,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "30s"
+        }
+      }
+    },
+    {
+      "path": "/v1/election-time",
+      "method": "POST",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/election-time/",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "kpu-pusat"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 15,
+          "max_errors": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/election-time/{id}",
+      "method": "GET",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/election-time/{id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 30,
+          "client_max_rate": 8,
+          "strategy": "ip"
+        },
+        "qos/http-cache": {
+          "ttl": "2m"
+        }
+      }
+    },
+    {
+      "path": "/v1/election-time/{id}",
+      "method": "PUT",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/election-time/{id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "kpu-pusat"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 15,
+          "max_errors": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/election-time/{id}",
+      "method": "DELETE",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/election-time/{id}",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "kpu-pusat"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 15,
+          "max_errors": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/election-time/{id}/activate",
+      "method": "POST",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/election-time/{id}/activate",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "kpu-pusat"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 2,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 30,
+          "max_errors": 1
+        },
+        "qos/ratelimit/proxy": {
+          "max_rate": 1,
+          "capacity": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/election-time/sync",
+      "method": "POST",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/election-time/sync",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "kpu-pusat"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 45,
+          "max_errors": 1
+        }
+      }
+    }
+  ]
+}

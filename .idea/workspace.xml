@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e17961b5-a02e-47ce-9979-31fb36d6f7ec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config/settings/election.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/settings/result.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/settings/ums.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/settings/vote.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ext/websocket/fiber_proxy.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/dummy-sample.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/plugins.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/plugins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/result.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/result.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler_factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler_factory.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

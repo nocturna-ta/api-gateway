@@ -2,6 +2,41 @@
   "base_path": "",
   "endpoints": [
     {
+      "path": "/v1/live/ws",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/live/ws",
+      "output_encoding": "no-op",
+      "extra_config": {
+        "websocket": {
+          "backend_url": "ws://host.docker.internal:8903/v1/live/ws",
+          "allowed_origins": ["*"],
+          "read_buffer_size": 4096,
+          "write_buffer_size": 4096,
+          "connection_timeout": "60s",
+          "ping_period": "30s",
+          "debug": true
+        }
+      },
+      "backend": []
+    },
+    {
+      "path": "/v1/live/ws/status",
+      "method": "GET",
+      "host": "host.docker.internal:8903",
+      "destination": "/v1/live/ws/status",
+      "output_encoding": "no-op",
+      "extra_config": {
+        "websocket": {
+          "backend_url": "ws://host.docker.internal:8903/v1/live/ws/status",
+          "allowed_origins": ["*"],
+          "read_buffer_size": 2048,
+          "write_buffer_size": 2048
+        }
+      },
+      "backend": []
+    },
+    {
       "path": "/result/docs/{path}",
       "method": "GET",
       "host": "host.docker.internal:8903",

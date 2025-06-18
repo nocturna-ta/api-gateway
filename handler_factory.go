@@ -16,6 +16,7 @@ import (
 	"github.com/luraproject/lura/v2/transport/http/server"
 	"github.com/nocturna-ta/api-gateway/ext/authz"
 	"github.com/nocturna-ta/api-gateway/ext/common"
+	"github.com/nocturna-ta/api-gateway/ext/websocket"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,6 +32,7 @@ func NewHandlerFactory(logger logging.Logger, metricCollector *metrics.Metrics, 
 	handlerFactory = metricCollector.NewHTTPHandlerFactory(handlerFactory)
 	handlerFactory = opencensus.New(handlerFactory)
 	handlerFactory = botdetector.New(handlerFactory, logger)
+	handlerFactory = websocket.HandlerFactory(logger, handlerFactory)
 
 	return func(cfg *config.EndpointConfig, p proxy.Proxy) gin.HandlerFunc {
 		logger.Debug(fmt.Sprintf("[ENDPOINT: %s] Building the http handler", cfg.Endpoint))

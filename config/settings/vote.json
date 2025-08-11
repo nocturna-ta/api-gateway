@@ -228,6 +228,106 @@
           "max_errors": 1
         }
       }
+    },
+    {
+      "path": "/v1/otp/generate",
+      "method": "POST",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/otp/generate",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "voter"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 45,
+          "max_errors": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/otp/verify",
+      "method": "POST",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/otp/verify",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "voter"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 45,
+          "max_errors": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/otp/resend",
+      "method": "POST",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/otp/resend",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "voter"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 45,
+          "max_errors": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/otp/status",
+      "method": "GET",
+      "host": "host.docker.internal:8902",
+      "destination": "/v1/otp/status",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "voting-service",
+        "required_roles": "voter"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 5,
+          "client_max_rate": 2,
+          "strategy": "ip"
+        }
+      },
+      "backend_extra_config": {
+        "qos/circuit-breaker": {
+          "interval": 60,
+          "timeout": 45,
+          "max_errors": 1
+        }
+      }
     }
   ]
 }

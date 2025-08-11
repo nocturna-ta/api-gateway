@@ -1,3 +1,4 @@
+// ext/websocket/fiber_proxy.go
 package websocket
 
 import (
@@ -20,11 +21,18 @@ var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true // Configure this based on your security requirements
 	},
-	HandshakeTimeout: 45 * time.Second,
+	HandshakeTimeout: 60 * time.Second, // Increased to match GoFiber
 	ReadBufferSize:   4096,
 	WriteBufferSize:  4096,
-	// Add subprotocols support for better compatibility
-	Subprotocols: []string{"chat", "echo"},
+	// Remove subprotocols to avoid conflicts - GoFiber doesn't specify any
+	// Subprotocols: []string{"chat", "echo"},
+}
+
+// Create a custom dialer with proper timeout settings
+var customDialer = &websocket.Dialer{
+	HandshakeTimeout: 60 * time.Second,
+	ReadBufferSize:   4096,
+	WriteBufferSize:  4096,
 }
 
 // Config represents the WebSocket proxy configuration
@@ -90,11 +98,15 @@ func NewWebSocketProxyHandler(cfg Config, logger logging.Logger) gin.HandlerFunc
 		headers.Set("User-Agent", "KrakenD-WebSocket-Proxy/1.0")
 
 		// Try to connect to GoFiber backend first before upgrading client
-		backendConn, resp, err := websocket.DefaultDialer.Dial(backendURL, headers)
+		backendConn, resp, err := customDialer.Dial(backendURL, headers)
 		if err != nil {
 			logger.Error("Failed to connect to GoFiber WebSocket backend:", err.Error())
 			if resp != nil {
 				logger.Error("Backend response status:", resp.Status)
+				// Log response body for debugging
+				if cfg.Debug && resp.Body != nil {
+					defer resp.Body.Close()
+				}
 			}
 			c.JSON(http.StatusBadGateway, gin.H{
 				"error":   "Failed to connect to backend WebSocket service",
@@ -132,24 +144,30 @@ func isWebSocketRequest(r *http.Request) bool {
 func proxyWebSocketConnections(client, backend *websocket.Conn, cfg Config, logger logging.Logger) {
 	done := make(chan struct{}, 2)
 
-	// Set connection deadlines
+	// Use longer timeouts that match GoFiber
+	connectionTimeout := 60 * time.Second
 	if cfg.ConnectionTimeout > 0 {
-		client.SetReadDeadline(time.Now().Add(cfg.ConnectionTimeout))
-		backend.SetReadDeadline(time.Now().Add(cfg.ConnectionTimeout))
+		connectionTimeout = cfg.ConnectionTimeout
 	}
+
+	// Set connection deadlines - but make them longer to avoid premature disconnection
+	client.SetReadDeadline(time.Now().Add(connectionTimeout))
+	backend.SetReadDeadline(time.Now().Add(connectionTimeout))
 
 	// Set pong handlers to reset read deadlines
 	client.SetPongHandler(func(string) error {
-		if cfg.ConnectionTimeout > 0 {
-			client.SetReadDeadline(time.Now().Add(cfg.ConnectionTimeout))
+		if cfg.Debug {
+			logger.Debug("Received pong from client")
 		}
+		client.SetReadDeadline(time.Now().Add(connectionTimeout))
 		return nil
 	})
 
 	backend.SetPongHandler(func(string) error {
-		if cfg.ConnectionTimeout > 0 {
-			backend.SetReadDeadline(time.Now().Add(cfg.ConnectionTimeout))
+		if cfg.Debug {
+			logger.Debug("Received pong from backend")
 		}
+		backend.SetReadDeadline(time.Now().Add(connectionTimeout))
 		return nil
 	})
 
@@ -178,9 +196,7 @@ func proxyWebSocketConnections(client, backend *websocket.Conn, cfg Config, logg
 			}
 
 			// Reset read deadline on activity
-			if cfg.ConnectionTimeout > 0 {
-				client.SetReadDeadline(time.Now().Add(cfg.ConnectionTimeout))
-			}
+			client.SetReadDeadline(time.Now().Add(connectionTimeout))
 
 			// Forward message to GoFiber backend
 			backend.SetWriteDeadline(time.Now().Add(10 * time.Second))
@@ -217,9 +233,7 @@ func proxyWebSocketConnections(client, backend *websocket.Conn, cfg Config, logg
 			}
 
 			// Reset read deadline on activity
-			if cfg.ConnectionTimeout > 0 {
-				backend.SetReadDeadline(time.Now().Add(cfg.ConnectionTimeout))
-			}
+			backend.SetReadDeadline(time.Now().Add(connectionTimeout))
 
 			// Forward message to client
 			client.SetWriteDeadline(time.Now().Add(10 * time.Second))
@@ -231,9 +245,14 @@ func proxyWebSocketConnections(client, backend *websocket.Conn, cfg Config, logg
 		}
 	}()
 
-	// Optional ping/pong handling
+	// Optional ping/pong handling - but use longer intervals
+	pingPeriod := 30 * time.Second // Reduced from 54 seconds to be more responsive
 	if cfg.PingPeriod > 0 {
-		go handlePingPong(client, backend, cfg.PingPeriod, logger, cfg.Debug)
+		pingPeriod = cfg.PingPeriod
+	}
+
+	if pingPeriod > 0 {
+		go handlePingPong(client, backend, pingPeriod, logger, cfg.Debug)
 	}
 
 	// Wait for either connection to close
@@ -298,8 +317,8 @@ func getWebSocketConfig(cfg *config.EndpointConfig) (Config, bool) {
 	wsConfig := Config{
 		ReadBufferSize:    4096,
 		WriteBufferSize:   4096,
-		ConnectionTimeout: 30 * time.Second,
-		PingPeriod:        54 * time.Second,
+		ConnectionTimeout: 60 * time.Second, // Increased from 30 to 60 seconds
+		PingPeriod:        30 * time.Second, // Reduced from 54 to 30 seconds
 		Debug:             false,
 	}
 
@@ -346,12 +365,15 @@ func getWebSocketConfig(cfg *config.EndpointConfig) (Config, bool) {
 func configureUpgrader(cfg Config) {
 	if cfg.ReadBufferSize > 0 {
 		upgrader.ReadBufferSize = cfg.ReadBufferSize
+		customDialer.ReadBufferSize = cfg.ReadBufferSize
 	}
 	if cfg.WriteBufferSize > 0 {
 		upgrader.WriteBufferSize = cfg.WriteBufferSize
+		customDialer.WriteBufferSize = cfg.WriteBufferSize
 	}
 	if cfg.ConnectionTimeout > 0 {
 		upgrader.HandshakeTimeout = cfg.ConnectionTimeout
+		customDialer.HandshakeTimeout = cfg.ConnectionTimeout
 	}
 }
 

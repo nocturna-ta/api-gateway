@@ -5,66 +5,96 @@
   "timeout": "60s",
   "cache_ttl": "300s",
   "extra_config": {{ marshal .plugins.global}},
-"endpoints": [
-{{ range $serviceKey, $service := . }}
-{{ range $endpointIndex, $endpoint := $service.endpoints }}
-{
-"endpoint": "{{if $service.base_path}}{{$service.base_path}}{{end}}{{$endpoint.path}}",
-"method": "{{ $endpoint.method }}",
-"output_encoding": "no-op",
-"concurrent_calls": 1,
-"input_query_strings": ["*"],
-"input_headers": ["*"],
-"extra_config": {
-{{- $extraConfigs := list }}
-{{- if $endpoint.auth }}
-{{- $extraConfigs = append $extraConfigs "auth" }}
-{{- end }}
-{{- if $service.extra_config }}
-{{- $extraConfigs = append $extraConfigs "service" }}
-{{- end }}
+  "endpoints": [
+    {{ range $serviceKey, $service := . }}
+    {{ range $endpointIndex, $endpoint := $service.endpoints }}
+    {
+      "endpoint": "{{if $service.base_path}}{{$service.base_path}}{{end}}{{$endpoint.path}}",
+      "method": "{{ $endpoint.method }}",
+      "output_encoding": "{{ if $endpoint.output_encoding }}{{ $endpoint.output_encoding }}{{ else }}no-op{{ end }}",
+      "concurrent_calls": 1,
+      "input_query_strings": ["*"],
+      "input_headers": ["*"],
+      "extra_config": {
+        {{- $extraConfigs := list }}
+        {{- if $endpoint.auth }}
+        {{- $extraConfigs = append $extraConfigs "auth" }}
+        {{- end }}
+        {{- if $service.extra_config }}
+        {{- $extraConfigs = append $extraConfigs "service" }}
+        {{- end }}
+        {{- if $endpoint.extra_config }}
+        {{- $extraConfigs = append $extraConfigs "endpoint" }}
+        {{- end }}
 
-{{- if $endpoint.auth }}
-{{ template "auth.tmpl" $endpoint }}
-{{- end }}
-{{- if and $endpoint.auth $service.extra_config }},{{ end }}
-{{- if $service.extra_config }}
-{{ marshal $service.extra_config}}
-{{- end }}
-},
-"backend": [
-{
-"url_pattern": "{{$endpoint.destination}}",
-"encoding": "no-op",
-"sd": "static",
-"method": "{{$endpoint.method}}",
-"host": [
-"{{$endpoint.host}}"
-],
-"disable_host_sanitize": false,
-"extra_config": {
-{{- if $service.backend_extra_config }}
-{{ marshal $service.backend_extra_config}}
-{{- end }}
-}
-}
-]
-},
-{{ end }}
-{{ end }}
-{
-"endpoint": "/status",
-"method": "GET",
-"output_encoding": "no-op",
-"concurrent_calls": 1,
-"backend": [
-{
-"url_pattern": "/__health",
-"host": [
-"http://localhost:8000"
-]
-}
-]
-}
-]
+        {{- if $endpoint.auth }}
+        {{ template "auth.tmpl" $endpoint }}
+        {{- end }}
+        {{- if and $endpoint.auth $service.extra_config }},{{ end }}
+        {{- if $service.extra_config }}
+        {{ marshal $service.extra_config}}
+        {{- end }}
+        {{- if and (or $endpoint.auth $service.extra_config) $endpoint.extra_config }},{{ end }}
+        {{- if $endpoint.extra_config }}
+        {{ marshal $endpoint.extra_config | trimSuffix "}" | trimPrefix "{" }}
+        {{- end }}
+      },
+      "backend": [
+        {{- if and $endpoint.backend (gt (len $endpoint.backend) 0) }}
+        {{- range $backendIndex, $backend := $endpoint.backend }}
+        {{- if $backendIndex }},{{ end }}
+        {
+          "url_pattern": "{{ if $backend.url_pattern }}{{ $backend.url_pattern }}{{ else }}{{$endpoint.destination}}{{ end }}",
+          "encoding": "{{ if $backend.encoding }}{{ $backend.encoding }}{{ else }}no-op{{ end }}",
+          "sd": "static",
+          "method": "{{ if $backend.method }}{{ $backend.method }}{{ else }}{{$endpoint.method}}{{ end }}",
+          "host": [
+            "{{ if $backend.host }}{{ $backend.host }}{{ else }}{{$endpoint.host}}{{ end }}"
+          ],
+          "disable_host_sanitize": false,
+          "extra_config": {
+            {{- if $backend.extra_config }}
+            {{ marshal $backend.extra_config}}
+            {{- else if $service.backend_extra_config }}
+            {{ marshal $service.backend_extra_config}}
+            {{- end }}
+          }
+        }
+        {{- end }}
+        {{- else }}
+        {
+          "url_pattern": "{{$endpoint.destination}}",
+          "encoding": "no-op",
+          "sd": "static",
+          "method": "{{$endpoint.method}}",
+          "host": [
+            "{{$endpoint.host}}"
+          ],
+          "disable_host_sanitize": false,
+          "extra_config": {
+            {{- if $service.backend_extra_config }}
+            {{ marshal $service.backend_extra_config}}
+            {{- end }}
+          }
+        }
+        {{- end }}
+      ]
+    },
+    {{ end }}
+    {{ end }}
+    {
+      "endpoint": "/status",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "url_pattern": "/__health",
+          "host": [
+            "http://localhost:8000"
+          ]
+        }
+      ]
+    }
+  ]
 }

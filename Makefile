@@ -177,3 +177,6 @@ clean:
 	rm -rf builder/skel/*
 	rm -f krakend
 	rm -rf vendor/
+
+running-gateway:
+	@docker run --rm -p 8000:8000 -e FC_ENABLE=1 -e FC_TEMPLATES="/etc/krakend/templates" -e FC_SETTINGS="/etc/krakend/settings" -v "${PWD}/config:/etc/krakend" krakend-votechain run -c /etc/krakend/krakend.json

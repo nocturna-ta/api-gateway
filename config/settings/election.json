@@ -159,6 +159,23 @@
       }
     },
     {
+      "path": "/v1/election/pairs/update",
+      "method": "PUT",
+      "host": "host.docker.internal:8901",
+      "destination": "/v1/election/pairs/update",
+      "auth": {
+        "log_request_on_error": true,
+        "target_service": "election-service"
+      },
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 1,
+          "strategy": "ip"
+        }
+      }
+    },
+    {
       "path": "/v1/election/pairs/detail",
       "method": "PUT",
       "host": "host.docker.internal:8901",

@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e17961b5-a02e-47ce-9979-31fb36d6f7ec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ext/websocket/fiber_proxy.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/result.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/result.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/krakend.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/krakend.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/election.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/election.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/plugins.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/plugins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/ums.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/ums.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings/vote.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/vote.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ext/websocket/fiber_proxy.go" beforeDir="false" afterPath="$PROJECT_DIR$/ext/websocket/fiber_proxy.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler_factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler_factory.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/krakend.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,22 +41,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bbyas/Documents/Kuliah/Skripsi/backend/api-gateway/test/fixtures/specs&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "C:/Users/bbyas/Documents/Kuliah/Skripsi/backend/api-gateway/test/fixtures/specs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\bbyas\Documents\Kuliah\Skripsi\backend\api-gateway\test\fixtures\specs" />

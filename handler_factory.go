@@ -2,6 +2,7 @@ package krakend
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	botdetector "github.com/krakendio/krakend-botdetector/v2/gin"
 	jose "github.com/krakendio/krakend-jose/v2"
 	ginjose "github.com/krakendio/krakend-jose/v2/gin"
@@ -17,13 +18,12 @@ import (
 	"github.com/nocturna-ta/api-gateway/ext/authz"
 	"github.com/nocturna-ta/api-gateway/ext/common"
 	"github.com/nocturna-ta/api-gateway/ext/websocket"
-
-	"github.com/gin-gonic/gin"
 )
 
 // NewHandlerFactory returns a HandlerFactory with a rate-limit and a metrics collector middleware injected
 func NewHandlerFactory(logger logging.Logger, metricCollector *metrics.Metrics, rejecter jose.RejecterFactory) router.HandlerFactory {
 	handlerFactory := router.CustomErrorEndpointHandler(logger, server.DefaultToHTTPError)
+	handlerFactory = websocket.HandlerFactory(logger, handlerFactory)
 	handlerFactory = ratelimit.NewRateLimiterMw(logger, handlerFactory)
 	handlerFactory = lua.HandlerFactory(logger, handlerFactory)
 	handlerFactory = ginjose.HandlerFactory(handlerFactory, logger, rejecter)
@@ -32,7 +32,6 @@ func NewHandlerFactory(logger logging.Logger, metricCollector *metrics.Metrics, 
 	handlerFactory = metricCollector.NewHTTPHandlerFactory(handlerFactory)
 	handlerFactory = opencensus.New(handlerFactory)
 	handlerFactory = botdetector.New(handlerFactory, logger)
-	handlerFactory = websocket.HandlerFactory(logger, handlerFactory)
 
 	return func(cfg *config.EndpointConfig, p proxy.Proxy) gin.HandlerFunc {
 		logger.Debug(fmt.Sprintf("[ENDPOINT: %s] Building the http handler", cfg.Endpoint))
